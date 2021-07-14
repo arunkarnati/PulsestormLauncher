@@ -167,7 +167,7 @@ class Pulsestorm_Launcher_Model_Observer
         // Ensure the layout area is 'adminhtml' because the CMS preview uses 'frontend',
         // and since the frontend page has a different breadcrumbs block, we'll get an exception.
         return $controller->getLayout()->getArea() !== 'adminhtml' ||
-            strpos($controller->getFullActionName(), 'adminhtml_') !== 0 ||
+            strpos($controller->getFullActionName(), 'adminhtml_') === false ||
             $controller->getRequest()->isAjax();
     }
 
