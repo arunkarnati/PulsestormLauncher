@@ -13,5 +13,8 @@
             "homepage": "http://alanstorm.com/",
             "role": "Developer"
         }
-    ]
+    ],
+    "extra": {
+        "magento-root-dir": "root"
+    }
 }
