@@ -162,9 +162,9 @@ class Pulsestorm_Launcher_Model_Observer
 
     protected function _shouldBail($controller): bool
     {
-        // Ensure the layout area is 'adminhtml' because the CMS preview uses 'frontend',
-        // and since the frontend page has a different breadcrumbs block, we'll get an exception.
-        return $controller->getLayout()->getArea() !== 'adminhtml' ||
+        // Ensure the layout area is 'adminhtml' since we only want the launcher in the Backoffice
+        return
+            $controller->getLayout()->getArea() !== 'adminhtml' ||
             strpos($controller->getFullActionName(), 'adminhtml_') === false ||
             $controller->getRequest()->isAjax();
     }
