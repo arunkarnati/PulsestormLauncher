@@ -10,10 +10,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 ?>
 <script type="text/javascript">
-  console.log('pulse storm launcher is now active');
+  console.log('PulseStorm menu launcher is now running');
+
   var pulsestorm_launcher_menu = <?php echo $this->getJson(); ?>;
   var pulsestorm_launcher_search_url = <?php echo $this->getSearchUrlJson(); ?>;
-  //global function ponters into the dom:loaded closure
+  //global function pointers into the dom:loaded closure
   var pulsestorm_launcher_show_launcher;
   var pulsestorm_launcher_register_link;
   document.observe('dom:loaded', function () {
@@ -89,7 +90,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       });
     };
     var open_window = function () {
-      test = new Window({ 'id': 'pulsestorm_launcher' });
+      var test = new Window({ 'id': 'pulsestorm_launcher' });
       test.setZIndex(1000);
       test.setHTMLContent('<p>hello nurse</p>');
       test.setDestroyOnClose(true);
@@ -138,8 +139,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       });
     };
 
-    //
-    a = render_menu(pulsestorm_launcher_menu, [], 1);
+    var a = render_menu(pulsestorm_launcher_menu, [], 1);
     // $('pulsestorm_launcher_test').update(a.join("\n"));
 
     var show_launcher = function () {
@@ -157,13 +157,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         $$('td.magento_e')[0].setStyle({ 'display': 'none' });
         $$('td.magento_w')[0].setStyle({ 'display': 'none' });
         $('pulsestorm_launcher_content').setAttribute('style', '');
-
-        // console.log("Called the Timeout");
-        $('pulsestorm_launcher_input').focus();
-        var thing = function () {
-          alert('test');
-        };
-        //test = new Autocompleter.Local('pulsestorm_launcher_input','pulsestorm_launcher_results',['foo','baz','bar'],{'updateElement':thing});
 
         var timeout_search = false;
         var search_requests = [];
@@ -195,14 +188,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
               var url = pulsestorm_launcher_search_url.url;
               url += ('?query=' + $F('pulsestorm_launcher_input'));
-              // var url = 'http://magento1point7pointzeropoint1.dev/index.php/admin/index/globalSearch/key/ac3d62400d96f06be161863f7e4470d3/?query=nokia';
 
-              var img = new Element('img');
+              var img = document.createElement('img');
               img.src = '<?php echo Mage::getDesign()->getSkinUrl('images/ajax-loader.gif', ['_theme' => 'default']); ?>';
-              var p = new Element('p');
-              p.insert(img);
+
+              var p = document.createElement('p');
+              p.append(img);
               p.id = 'pulsestorm_launcher_throbber';
-              $('pulsestorm_launcher_results').insert(p);
+              $('pulsestorm_launcher_results').append(p);
 
               var search_request = new Ajax.Request(url, {
                 method: 'get',
@@ -218,8 +211,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                     var url = $(element.parentNode).readAttribute('url');
                     var row = '<p><a href="' + url + '">' + element.innerHTML + '</a></p>';
                     $('pulsestorm_launcher_results').insert(row);
-                    //console.log(element);
-                    //console.log(element.parentNode);
                   });
                 }
               });
@@ -255,7 +246,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       key_queue.push(e.which);
       key_queue.shift();
 
-      combined_codes = '<?php echo $this->getCombinedCodes(); ?>';
+      var combined_codes = '<?php echo $this->getCombinedCodes(); ?>';
       if (key_queue.join('_') == combined_codes) {
         Event.stop(e);
         show_launcher();
@@ -278,14 +269,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       }
     });
     $$('.nav-bar')[0].innerHTML +=
-      '<a href="#" onclick ="pulsestorm_launcher_show_launcher();return false;" style="color:#fff; line-height: 27px; text-decoration: none">Search Menu</a>';
+      '<a href="#" onclick ="pulsestorm_launcher_show_launcher();return false;" style="color:#fff; line-height: 27px; text-decoration: none">Search Navigation Menu</a>';
   });
 
 </script>
-
-<!-- 
-<div style="margin-left:10px;">
-<pre id="pulsestorm_launcher_test">
-</pre>
-</div>
- -->

@@ -46,7 +46,7 @@ class Pulsestorm_Launcher_Model_Observer
             foreach ($sections as $section) {
                 $label = 'System Configuration - ' . $section->getLabel();
                 $code = $section->getId();
-                $url = $url = Mage::getModel('adminhtml/url');
+                $url = Mage::getModel('adminhtml/url');
                 $url = $url->getUrl('adminhtml/system_config/edit', ['_current' => true, 'section' => $code]);
                 $launcher_links->addLink($label, $url);
             }
@@ -79,9 +79,8 @@ class Pulsestorm_Launcher_Model_Observer
         $block = $layout->createBlock('pulsestorm_launcher/page_menu');
         $menu = $block->getMenuArray();
         $json = Mage::helper('core')->jsonEncode($menu);
-        $json = $block->secretKeyJsonStringReplace($json);
 
-        return $json;
+        return $block->secretKeyJsonStringReplace($json);
     }
 
     protected function _addMainJavascript($controller, $json)
@@ -136,7 +135,6 @@ class Pulsestorm_Launcher_Model_Observer
 
     protected function _addBreadcrumbsIfNotThere($observer)
     {
-
         $controller = $observer->getAction();
 
         if (!$controller) {
@@ -162,7 +160,7 @@ class Pulsestorm_Launcher_Model_Observer
         $root->insert($block);
     }
 
-    protected function _shouldBail($controller)
+    protected function _shouldBail($controller): bool
     {
         // Ensure the layout area is 'adminhtml' because the CMS preview uses 'frontend',
         // and since the frontend page has a different breadcrumbs block, we'll get an exception.
@@ -170,5 +168,4 @@ class Pulsestorm_Launcher_Model_Observer
             strpos($controller->getFullActionName(), 'adminhtml_') === false ||
             $controller->getRequest()->isAjax();
     }
-
 }

@@ -12,8 +12,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 class Pulsestorm_Launcher_Block_Page_Menu extends Mage_Adminhtml_Block_Page_Menu
 {
     public function secretKeyJsonStringReplace($jsonString)
-    {    
-        $jsonString = preg_replace_callback('#'.Mage_Adminhtml_Model_Url::SECRET_KEY_PARAM_NAME.'\\\/\$([^\\\/].*?)\\\/([^\$].*?)\$#', array($this, '_callbackSecretKey'), $jsonString);
-        return $jsonString;
+    {
+        return preg_replace_callback('#' . Mage_Adminhtml_Model_Url::SECRET_KEY_PARAM_NAME . '\\\/\$([^\\\/].*?)\\\/([^\$].*?)\$#',
+            [$this, '_callbackSecretKey'],
+            $jsonString
+        );
     }
 }
